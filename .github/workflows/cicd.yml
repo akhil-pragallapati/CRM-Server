@@ -15,20 +15,20 @@ jobs:
       - name: Login to docker hub
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
       - name: build docker image
-        run: docker build -t akhilpragallapati/CRM-server-app .
+        run: docker build -t akhilpragallapati/crm-server .
       - name: Publish image to docker hub
-        run: docker push akhilpragallapati/CRM-server-app:latest
+        run: docker push akhilpragallapati/crm-server:latest
 
   delpoy:
     needs: build
     runs-on: self-hosted
     steps:
       - name: Pull image from docker hub
-        run: docker pull akhilpragallapati/CRM-server-app:latest
+        run: docker pull akhilpragallapati/crm-server:latest
       - name: Delete old container if exists
         run: docker rm -f CRM-Server-app-container
       - name: Run docker container
-        run: docker run -d -p 4000:4000 --name CRM-Server-app-container akhilpragallapati/CRM-server-app
+        run: docker run -d -p 4000:4000 --name CRM-Server-app-container akhilpragallapati/crm-server
       - name: outfile
         run: echo "run success full"
 
